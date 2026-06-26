@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación de Actuacion y Anotacion - Cacho C++</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --sidebar-bg: #111827;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-purple: #8b5cf6;
+            --accent-purple-glow: rgba(139, 92, 246, 0.15);
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --code-bg: #1e293b;
+            --code-token-keyword: #ff79c6;
+            --code-token-type: #8be9fd;
+            --code-token-string: #f1fa8c;
+            --code-token-number: #bd93f9;
+            --code-token-comment: #6272a4;
+            --code-token-function: #50fa7b;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-purple: #6d28d9;
+            --accent-purple-glow: rgba(109, 40, 217, 0.1);
+            --accent-cyan: #0891b2;
+            --accent-emerald: #059669;
+            --accent-rose: #e11d48;
+            --code-bg: #0f172a;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* Sidebar Styling */
+        aside {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--card-border);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            z-index: 100;
+            transition: background-color var(--transition-speed), border-color var(--transition-speed);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.025em;
+        }
+
+        .logo-area i {
+            color: var(--accent-purple);
+            text-shadow: 0 0 12px var(--accent-purple);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links li.active a {
+            background-color: var(--accent-purple-glow);
+            color: var(--accent-purple);
+        }
+
+        .nav-links li.active a {
+            font-weight: 600;
+            border-left: 3px solid var(--accent-purple);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        /* Main Content Styling */
+        main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem 4rem;
+            max-width: 1200px;
+            width: calc(100% - 280px);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .header-title h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-purple);
+        }
+
+        /* Section layout */
+        section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 2rem;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        section h2 i {
+            color: var(--accent-purple);
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 1.05rem;
+        }
+
+        /* Cards and Information Boxes */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            aside {
+                width: 70px;
+                padding: 2rem 0.5rem;
+            }
+            aside .logo-area span, aside .nav-links span {
+                display: none;
+            }
+            aside .nav-links a {
+                justify-content: center;
+            }
+            main {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+                padding: 2rem;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+            backdrop-filter: blur(12px);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-purple h3 i { color: var(--accent-purple); }
+        .card-cyan h3 i { color: var(--accent-cyan); }
+        .card-emerald h3 i { color: var(--accent-emerald); }
+
+        /* Struct/Class definitions list */
+        .member-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .member-item {
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 1rem;
+        }
+
+        .member-name {
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .member-type {
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .member-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            line-height: 1.5;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-purple { background-color: var(--accent-purple-glow); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+        .badge-cyan { background-color: rgba(6, 182, 212, 0.1); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+        .badge-emerald { background-color: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        /* Code Blocks styling */
+        .code-container {
+            position: relative;
+            background-color: var(--code-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--card-border);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .code-header {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-purple);
+            color: white;
+            border-color: var(--accent-purple);
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #f8f8f2;
+        }
+
+        /* Syntax Highlighting Classes */
+        .token-keyword { color: var(--code-token-keyword); font-weight: 600; }
+        .token-type { color: var(--code-token-type); }
+        .token-string { color: var(--code-token-string); }
+        .token-number { color: var(--code-token-number); }
+        .token-comment { color: var(--code-token-comment); font-style: italic; }
+        .token-function { color: var(--code-token-function); }
+
+        /* Interactive Playground */
+        .playground-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1000px) {
+            .playground-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .playground-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-purple);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .checkbox-group input {
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--accent-purple);
+        }
+
+        .dice-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .dice-btn {
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .dice-btn.selected {
+            background-color: var(--accent-purple);
+            border-color: var(--accent-purple);
+            color: white;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .playground-output {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .output-box {
+            background: var(--code-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid var(--card-border);
+        }
+
+        .output-box h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .output-text {
+            font-family: 'Fira Code', monospace;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            color: #50fa7b;
+            margin: 0;
+        }
+
+        .output-text.cpp-output {
+            color: #8be9fd;
+        }
+
+        /* Custom alert boxes */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .alert-info {
+            background-color: rgba(6, 182, 212, 0.08);
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+        .alert-info i { color: var(--accent-cyan); margin-right: 0.5rem; }
+
+        .alert-warning {
+            background-color: rgba(244, 63, 94, 0.08);
+            border-color: var(--accent-rose);
+            color: var(--text-primary);
+        }
+        .alert-warning i { color: var(--accent-rose); margin-right: 0.5rem; }
+
+        /* Dynamic Tabs */
+        .tabs-header {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-purple);
+            border-bottom-color: var(--accent-purple);
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="logo-area">
+            <i class="fa-solid fa-dice-d6"></i>
+            <span>Cacho C++ API</span>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#introduccion"><i class="fa-solid fa-book-open"></i> <span>Introducción</span></a></li>
+            <li><a href="#anotacion"><i class="fa-solid fa-circle-info"></i> <span>Anotación</span></a></li>
+            <li><a href="#actuacion"><i class="fa-solid fa-gears"></i> <span>Actuación</span></a></li>
+            <li><a href="#ejemplos"><i class="fa-solid fa-code"></i> <span>Ejemplos de Uso</span></a></li>
+            <li><a href="#playground"><i class="fa-solid fa-flask-vial"></i> <span>Playground Interactivo</span></a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main>
+        <header>
+            <div class="header-title">
+                <h1>Documentación Oficial</h1>
+                <p>Estructuras y clases del motor del juego Cacho Alalay (C++ / Cacho Engine)</p>
+            </div>
+            <button class="theme-toggle" id="themeToggleBtn" aria-label="Cambiar tema">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+        </header>
+
+        <!-- INTRODUCCION -->
+        <section id="introduccion">
+            <h2><i class="fa-solid fa-book-open"></i> Introducción al Modelo</h2>
+            <p>
+                En el juego de <strong>Cacho</strong> (o Alalay), la toma de decisiones gira en torno a qué dados conservar, qué dados volver a lanzar y dónde anotar los resultados obtenidos. Para modelar este proceso de forma estructurada, el simulador del juego en C++ utiliza principalmente dos construcciones fundamentales definidas en <a href="file:///media/rasin/OS/GDrive/Proyectos%20y%20Servicios/cacho-python/cacho-cpp/src/Actuacion.h">Actuacion.h</a>:
+            </p>
+            <div class="grid-2">
+                <div class="card card-purple">
+                    <h3><i class="fa-solid fa-list-check"></i> Anotacion</h3>
+                    <p>
+                        Representa el resultado concreto de haber elegido una de las categorías del tablero del Cacho. Define el tipo de juego seleccionado y los puntos asociados.
+                    </p>
+                    <span class="badge badge-purple">Estructura Simple</span>
+                </div>
+                <div class="card card-cyan">
+                    <h3><i class="fa-solid fa-play"></i> Actuacion</h3>
+                    <p>
+                        Representa una acción completa o jugada realizable en el turno de un jugador. Esto incluye decisiones tales como lanzar ciertos dados, anotar puntos en un casillero, tachar un casillero ("sobre" o directo), o declarar una dormida.
+                    </p>
+                    <span class="badge badge-cyan">Clase con Comportamiento</span>
+                </div>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i>
+                <strong>Contexto del Cacho:</strong> Cada turno de un jugador consiste en hasta dos intentos independientes. En el primer intento del turno, un jugador puede anotar directamente una jugada, dejarla "sobre" la mesa para meter presión al siguiente jugador, o volver a lanzar algunos dados.
+            </div>
+        </section>
+
+        <!-- ANOTACION -->
+        <section id="anotacion">
+            <h2><i class="fa-solid fa-circle-info"></i> Estructura Anotacion</h2>
+            <p>
+                <code>Anotacion</code> es un <code>struct</code> plano que describe un puntaje asignado (o a asignar) en un determinado casillero de la cartilla o marcador del jugador.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="badge badge-purple">Anotacion.h</span>
+                    <button class="copy-btn" onclick="copyCode('codeAnotacion')"><i class="fa-solid fa-copy"></i> Copiar</button>
+                </div>
+                <pre><code id="codeAnotacion"><span class="token-keyword">struct</span> <span class="token-type">Anotacion</span> {
+    <span class="token-type">std::string</span> juego;  <span class="token-comment">// Nombre de la categoría de puntaje</span>
+    <span class="token-type">int</span> puntos;         <span class="token-comment">// Puntos obtenidos (-1 indica no aplica, 0 indica borrado)</span>
+};</code></pre>
+            </div>
+
+            <h3>Miembros de la Estructura</h3>
+            <ul class="member-list">
+                <li class="member-item">
+                    <div class="member-name">juego <span class="member-type">(std::string)</span></div>
+                    <div class="member-desc">
+                        Identificador de la jugada del tablero. Los valores posibles son:
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                            <li><strong>Chicas:</strong> <code>"balas"</code> (unos), <code>"tontos"</code> (doses), <code>"trenes"</code> (treses), <code>"cuadras"</code> (cuatros), <code>"quinas"</code> (cincos), <code>"senas"</code> (seises).</li>
+                            <li><strong>Mayores:</strong> <code>"escalera"</code>, <code>"full"</code>, <code>"poker"</code>, <code>"grande"</code> (primer grande), <code>"grande2"</code> (segunda grande).</li>
+                            <li><strong>Especiales:</strong> Categorías temporales con aclaraciones como <code>"juego_name (de la 1ra mano)"</code>.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="member-item">
+                    <div class="member-name">puntos <span class="member-type">(int)</span></div>
+                    <div class="member-desc">
+                        La puntuación correspondiente a la categoría.
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                            <li><strong>Puntaje positivo:</strong> El puntaje calculado según las reglas (p. ej., 20/25 puntos para escalera, 30/35 para full, 40/45 para póker, 50 para grande, o el total sumado de dados repetidos para las chicas).</li>
+                            <li><strong>Valor <code>0</code>:</strong> Significa que la categoría ha sido "tachada" o "borrada" en el tablero debido a una mala tirada.</li>
+                            <li><strong>Valor <code>-1</code>:</strong> Representa que la anotación no aplica a la jugada actual (por ejemplo, cuando la acción es <code>"lanzar"</code>).</li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ACTUACION -->
+        <section id="actuacion">
+            <h2><i class="fa-solid fa-gears"></i> Clase Actuacion</h2>
+            <p>
+                La clase <code>Actuacion</code> empaqueta todos los detalles de una acción posible devuelta por el sistema de reglas del juego a través de la clase <code>Anotador</code>. Cada jugador (IA o humano) recibe un listado de estas actuaciones en su turno y debe seleccionar el índice de la actuación que desea ejecutar.
+            </p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="badge badge-purple">Actuacion.h</span>
+                    <button class="copy-btn" onclick="copyCode('codeActuacion')"><i class="fa-solid fa-copy"></i> Copiar</button>
+                </div>
+                <pre><code id="codeActuacion"><span class="token-keyword">class</span> <span class="token-type">Actuacion</span> {
+<span class="token-keyword">public</span>:
+    <span class="token-type">std::string</span> accion;             <span class="token-comment">// Tipo de acción ("lanzar", "anotar", "sobre", "nada", "dormida")</span>
+    <span class="token-type">Anotacion</span> anotacion;            <span class="token-comment">// Estructura Anotacion asociada</span>
+    <span class="token-type">std::vector&lt;int&gt;</span> indiceDados;   <span class="token-comment">// Índices de los dados [0-4] involucrados en la acción</span>
+    <span class="token-type">bool</span> seRespeta;                 <span class="token-comment">// Indica si la acción es parte de respetar un sobremesa</span>
+
+    <span class="token-comment">// Constructor</span>
+    <span class="token-function">Actuacion</span>(<span class="token-type">std::string</span> acc, <span class="token-type">Anotacion</span> anot, <span class="token-type">std::vector&lt;int&gt;</span> idx, <span class="token-type">bool</span> respeta)
+        : <span class="token-function">accion</span>(acc), <span class="token-function">anotacion</span>(anot), <span class="token-function">indiceDados</span>(idx), <span class="token-function">seRespeta</span>(respeta) {}
+
+    <span class="token-type">void</span> <span class="token-function">display</span>() <span class="token-keyword">const</span>;
+    <span class="token-type">void</span> <span class="token-function">displayCompacto</span>(<span class="token-type">int</span> indice = -1) <span class="token-keyword">const</span>;
+};</code></pre>
+            </div>
+
+            <h3>Miembros de la Clase</h3>
+            <ul class="member-list">
+                <li class="member-item">
+                    <div class="member-name">accion <span class="member-type">(std::string)</span></div>
+                    <div class="member-desc">
+                        Describe el comportamiento semántico de esta jugada:
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                            <li><code>"lanzar"</code>: El jugador desea volver a tirar los dados indicados en <code>indiceDados</code>.</li>
+                            <li><code>"anotar"</code>: El jugador decide registrar la jugada en su tablero.</li>
+                            <li><code>"sobre"</code>: Acción válida únicamente en el <em>intento 1</em>, donde el jugador anota en la mesa y le pasa los dados al rival para que decida "si respeta" la anotación del sobremesa.</li>
+                            <li><code>"dormida"</code>: Declaración de victoria inmediata (dormida) al obtener 5 dados iguales del mismo valor de una sola tirada.</li>
+                            <li><code>"nada"</code>: Comportamiento nulo o de control en turnos especiales (como segundas pasadas de tiro).</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="member-item">
+                    <div class="member-name">anotacion <span class="member-type">(Anotacion)</span></div>
+                    <div class="member-desc">
+                        Estructura que describe qué categoría del tablero y cuántos puntos se ven afectados por la acción (mayormente para <code>"anotar"</code>, <code>"sobre"</code> o tachar).
+                    </div>
+                </li>
+                <li class="member-item">
+                    <div class="member-name">indiceDados <span class="member-type">(std::vector&lt;int&gt;)</span></div>
+                    <div class="member-desc">
+                        Vector con valores en el rango <code>[0-4]</code> que indica cuáles dados están involucrados en la acción. En una acción de tipo <code>"lanzar"</code>, este vector especifica exactamente cuáles dados volverá a tirar el motor del juego.
+                    </div>
+                </li>
+                <li class="member-item">
+                    <div class="member-name">seRespeta <span class="member-type">(bool)</span></div>
+                    <div class="member-desc">
+                        Variable booleana. Si es <code>true</code>, se indica que la tirada actual respeta el juego del rival anterior o una jugada de mano especial. Si es <code>false</code>, no se aplica respeto automático.
+                    </div>
+                </li>
+            </ul>
+
+            <h3 style="margin-top: 2rem;">Métodos Integrados</h3>
+            <ul class="member-list">
+                <li class="member-item">
+                    <div class="member-name">display() <span class="member-type">const</span></div>
+                    <div class="member-desc">
+                        Imprime los detalles de la actuación en múltiples líneas en la salida estándar <code>std::cout</code>. Útil para depuración y visualización de menús para jugadores humanos.
+                    </div>
+                </li>
+                <li class="member-item">
+                    <div class="member-name">displayCompacto(int indice = -1) <span class="member-type">const</span></div>
+                    <div class="member-desc">
+                        Imprime la representación formateada en una sola línea del objeto. Si se pasa un valor positivo a <code>indice</code>, se antepone dicho valor entre corchetes, p. ej. <code>[i]</code>. Este formato es el utilizado principalmente por el motor de juego interactivo en consola.
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- EJEMPLOS DE USO -->
+        <section id="ejemplos">
+            <h2><i class="fa-solid fa-code"></i> Ejemplos Básicos de Uso en C++</h2>
+            <p>
+                A continuación se presentan diferentes ejemplos prácticos que ilustran cómo inicializar y manipular estos dos componentes en un flujo real de C++.
+            </p>
+
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-instanciacion')">1. Creación Básica</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-jugador-bot')">2. Implementación en Bot (Jugador)</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-impresion')">3. Métodos de Visualización</button>
+            </div>
+
+            <!-- TAB 1: INSTANCIACION -->
+            <div id="tab-instanciacion" class="tab-pane active">
+                <p>Cómo crear instancias directas de <code>Anotacion</code> y <code>Actuacion</code> usando inicializadores directos y constructores:</p>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="badge badge-purple">main.cpp</span>
+                        <button class="copy-btn" onclick="copyCode('codeInst')"><i class="fa-solid fa-copy"></i> Copiar</button>
+                    </div>
+                    <pre><code id="codeInst"><span class="token-keyword">#include</span> <span class="token-string">"Actuacion.h"</span>
+<span class="token-keyword">#include</span> <span class="token-string">&lt;iostream&gt;</span>
+<span class="token-keyword">#include</span> <span class="token-string">&lt;vector&gt;</span>
+
+<span class="token-type">int</span> <span class="token-function">main</span>() {
+    <span class="token-comment">// 1. Instanciar una anotación directa de Full de Mano (35 puntos)</span>
+    <span class="token-type">Anotacion</span> fullMano = {<span class="token-string">"full"</span>, <span class="token-number">35</span>};
+
+    <span class="token-comment">// 2. Crear una actuación para anotar el Full en la planilla</span>
+    <span class="token-type">Actuacion</span> accionAnotar(<span class="token-string">"anotar"</span>, fullMano, {}, <span class="token-keyword">false</span>);
+
+    <span class="token-comment">// 3. Crear una actuación para lanzar los dados en las posiciones 0, 2 y 4</span>
+    <span class="token-type">Anotacion</span> sinAnotar = {<span class="token-string">""</span>, <span class="token-number">-1</span>};
+    <span class="token-type">Actuacion</span> accionLanzar(<span class="token-string">"lanzar"</span>, sinAnotar, {<span class="token-number">0</span>, <span class="token-number">2</span>, <span class="token-number">4</span>}, <span class="token-keyword">false</span>);
+
+    <span class="token-comment">// 4. Crear una actuación para tachar/borrar la categoría "grande"</span>
+    <span class="token-type">Actuacion</span> accionTachar(<span class="token-string">"anotar"</span>, {<span class="token-string">"grande"</span>, <span class="token-number">0</span>}, {}, <span class="token-keyword">false</span>);
+
+    <span class="token-keyword">return</span> <span class="token-number">0</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TAB 2: JUGADOR BOT -->
+            <div id="tab-jugador-bot" class="tab-pane">
+                <p>Ejemplo de cómo un Bot evaluador analiza el vector de <code>Actuacion</code> disponibles provistas por el motor de juego para tomar una decisión informada:</p>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="badge badge-purple">JugadorHeuristico.h</span>
+                        <button class="copy-btn" onclick="copyCode('codeBot')"><i class="fa-solid fa-copy"></i> Copiar</button>
+                    </div>
+                    <pre><code id="codeBot"><span class="token-keyword">#include</span> <span class="token-string">"Jugador.h"</span>
+<span class="token-keyword">#include</span> <span class="token-string">&lt;iostream&gt;</span>
+<span class="token-keyword">#include</span> <span class="token-string">&lt;vector&gt;</span>
+
+<span class="token-keyword">class</span> <span class="token-type">JugadorHeuristico</span> : <span class="token-keyword">public</span> <span class="token-type">Jugador</span> {
+<span class="token-keyword">public</span>:
+    <span class="token-function">JugadorHeuristico</span>(<span class="token-type">std::string</span> nom) : <span class="token-function">Jugador</span>(nom) {}
+
+    <span class="token-type">int</span> <span class="token-function">jugar</span>(<span class="token-keyword">const</span> <span class="token-type">std::map&lt;std::string, Marcador&gt;</span>&amp; <span class="token-comment">/*marcadores*/</span>,
+              <span class="token-keyword">const</span> <span class="token-type">std::vector&lt;Actuacion&gt;</span>&amp; actuacionesPosibles,
+              <span class="token-keyword">const</span> <span class="token-type">std::vector&lt;int&gt;</span>&amp; <span class="token-comment">/*dados*/</span>,
+              <span class="token-keyword">const</span> <span class="token-type">Anotacion</span>&amp; <span class="token-comment">/*resultadoPrevio*/</span>) <span class="token-keyword">override</span> {
+        
+        <span class="token-comment">// Estrategia heurística básica:</span>
+        <span class="token-comment">// 1. Si existe una victoria inmediata ("dormida"), tomarla inmediatamente.</span>
+        <span class="token-keyword">for</span> (<span class="token-type">size_t</span> i = <span class="token-number">0</span>; i &lt; actuacionesPosibles.<span class="token-function">size</span>(); ++i) {
+            <span class="token-keyword">if</span> (actuacionesPosibles[i].accion == <span class="token-string">"dormida"</span>) {
+                <span class="token-type">std::cout</span> &lt;&lt; nombre &lt;&lt; <span class="token-string">" declara DORMIDA y gana!"</span> &lt;&lt; <span class="token-type">std::endl</span>;
+                <span class="token-keyword">return</span> i;
+            }
+        }
+
+        <span class="token-comment">// 2. Si hay una opción para anotar una jugada de alto valor (>= 30 pts) de manera directa</span>
+        <span class="token-keyword">for</span> (<span class="token-type">size_t</span> i = <span class="token-number">0</span>; i &lt; actuacionesPosibles.<span class="token-function">size</span>(); ++i) {
+            <span class="token-keyword">if</span> (actuacionesPosibles[i].accion == <span class="token-string">"anotar"</span> &amp;&amp; 
+                actuacionesPosibles[i].anotacion.puntos &gt;= <span class="token-number">30</span>) {
+                <span class="token-keyword">return</span> i;
+            }
+        }
+
+        <span class="token-comment">// 3. De lo contrario, por defecto volver a lanzar dados (generalmente la primera opción de lanzamiento)</span>
+        <span class="token-keyword">for</span> (<span class="token-type">size_t</span> i = <span class="token-number">0</span>; i &lt; actuacionesPosibles.<span class="token-function">size</span>(); ++i) {
+            <span class="token-keyword">if</span> (actuacionesPosibles[i].accion == <span class="token-string">"lanzar"</span>) {
+                <span class="token-keyword">return</span> i;
+            }
+        }
+
+        <span class="token-comment">// 4. Retorno de emergencia (último elemento disponible)</span>
+        <span class="token-keyword">return</span> actuacionesPosibles.<span class="token-function">size</span>() - <span class="token-number">1</span>;
+    }
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- TAB 3: IMPRESION -->
+            <div id="tab-impresion" class="tab-pane">
+                <p>Visualización del formato de impresión que generan las funciones miembros de <code>Actuacion</code>:</p>
+                <div class="code-container">
+                    <div class="code-header">
+                        <span class="badge badge-purple">Output de Consola</span>
+                    </div>
+                    <pre><code><span class="token-comment">// Código ejecutado:</span>
+<span class="token-type">Actuacion</span> act(<span class="token-string">"anotar"</span>, {<span class="token-string">"escalera"</span>, <span class="token-number">25</span>}, {}, <span class="token-keyword">false</span>);
+
+<span class="token-type">std::cout</span> &lt;&lt; <span class="token-string">"--- Salida de display() ---"</span> &lt;&lt; <span class="token-type">std::endl</span>;
+act.<span class="token-function">display</span>();
+
+<span class="token-type">std::cout</span> &lt;&lt; <span class="token-string">"\n--- Salida de displayCompacto(4) ---"</span> &lt;&lt; <span class="token-type">std::endl</span>;
+act.<span class="token-function">displayCompacto</span>(<span class="token-number">4</span>);
+
+<span class="token-comment">/* SALIDA GENERADA EN CONSOLA:
+--- Salida de display() ---
+accion: anotar
+anotacion: (escalera, 25)
+indiceDados: []
+seRespeta: False
+
+--- Salida de displayCompacto(4) ---
+[4](anotar,('escalera', 25), [], False)
+*/</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE PLAYGROUND -->
+        <section id="playground" class="card">
+            <h2><i class="fa-solid fa-flask-vial"></i> Playground Interactivo de Simulación</h2>
+            <p>
+                Modifica los atributos interactivos a continuación para generar dinámicamente el código de inicialización en C++ y visualizar las representaciones exactas que producirán las llamadas a los métodos <code>display()</code> y <code>displayCompacto()</code>.
+            </p>
+
+            <div class="playground-container">
+                <!-- FORM SIDE -->
+                <div class="playground-form">
+                    <div class="form-group">
+                        <label for="playAccion">Acción (<code>accion</code>)</label>
+                        <select id="playAccion" class="form-control" onchange="updatePlayground()">
+                            <option value="anotar">anotar (Guardar en planilla)</option>
+                            <option value="lanzar" selected>lanzar (Tirar un subconjunto de dados)</option>
+                            <option value="sobre">sobre (Proponer sobremesa al rival)</option>
+                            <option value="tachar">anotar con 0 puntos (Tachar jugada)</option>
+                            <option value="dormida">dormida (Victoria directa)</option>
+                            <option value="nada">nada (Control interno)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="groupJuego">
+                        <label for="playJuego">Juego / Categoría (<code>anotacion.juego</code>)</label>
+                        <select id="playJuego" class="form-control" onchange="updatePlayground()">
+                            <option value="balas">balas (1s)</option>
+                            <option value="tontos">tontos (2s)</option>
+                            <option value="trenes">trenes (3s)</option>
+                            <option value="cuadras">cuadras (4s)</option>
+                            <option value="quinas">quinas (5s)</option>
+                            <option value="senas">senas (6s)</option>
+                            <option value="escalera" selected>escalera</option>
+                            <option value="full">full</option>
+                            <option value="poker">poker</option>
+                            <option value="grande">grande</option>
+                            <option value="grande2">grande2 (Segunda Grande)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="groupPuntos">
+                        <label for="playPuntos">Puntos de la Anotación (<code>anotacion.puntos</code>)</label>
+                        <input type="number" id="playPuntos" class="form-control" value="25" min="-1" max="50" oninput="updatePlayground()">
+                    </div>
+
+                    <div class="form-group" id="groupDice">
+                        <label>Dados seleccionados para lanzar (<code>indiceDados</code>)</label>
+                        <div class="dice-selector">
+                            <button class="dice-btn selected" onclick="toggleDice(0)">Dado 0</button>
+                            <button class="dice-btn" onclick="toggleDice(1)">Dado 1</button>
+                            <button class="dice-btn selected" onclick="toggleDice(2)">Dado 2</button>
+                            <button class="dice-btn" onclick="toggleDice(3)">Dado 3</button>
+                            <button class="dice-btn selected" onclick="toggleDice(4)">Dado 4</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="playSeRespeta" onchange="updatePlayground()">
+                            ¿Se Respeta la jugada previa? (<code>seRespeta</code>)
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="playIndiceMetodo">Índice opcional para <code>displayCompacto</code></label>
+                        <input type="number" id="playIndiceMetodo" class="form-control" value="3" min="-1" max="100" oninput="updatePlayground()">
+                    </div>
+                </div>
+
+                <!-- OUTPUT SIDE -->
+                <div class="playground-output">
+                    <div class="output-box">
+                        <h4>Declaración e inicialización en C++</h4>
+                        <pre><code class="output-text cpp-output" id="outCppCode">Cargando...</code></pre>
+                    </div>
+
+                    <div class="output-box">
+                        <h4>Salida de <code>display()</code></h4>
+                        <pre><code class="output-text" id="outDisplay">Cargando...</code></pre>
+                    </div>
+
+                    <div class="output-box">
+                        <h4>Salida de <code>displayCompacto()</code></h4>
+                        <pre><code class="output-text" id="outDisplayCompacto">Cargando...</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Cacho Engine Simulator - Documentación de Clases Core. Creado con fines didácticos e interactivos.</p>
+        </footer>
+    </main>
+
+    <!-- JavaScript Actions -->
+    <script>
+        // Theme toggler
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.body.removeAttribute('data-theme');
+                themeIcon.className = 'fa-solid fa-moon';
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fa-solid fa-sun';
+            }
+        });
+
+        // Tabs
+        function switchTab(evt, tabId) {
+            const tabPanes = document.getElementsByClassName('tab-pane');
+            for (let pane of tabPanes) {
+                pane.classList.remove('active');
+            }
+            
+            const tabBtns = document.getElementsByClassName('tab-btn');
+            for (let btn of tabBtns) {
+                btn.classList.remove('active');
+            }
+            
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Copy Code utility
+        function copyCode(elementId) {
+            const codeText = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const button = event.currentTarget || document.activeElement;
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            });
+        }
+
+        // Playground State and logic
+        let selectedDice = [0, 2, 4];
+
+        function toggleDice(val) {
+            const index = selectedDice.indexOf(val);
+            if (index > -1) {
+                selectedDice.splice(index, 1);
+            } else {
+                selectedDice.push(val);
+                selectedDice.sort();
+            }
+            
+            // Update UI class
+            const diceButtons = document.querySelectorAll('.dice-btn');
+            diceButtons[val].classList.toggle('selected');
+            
+            updatePlayground();
+        }
+
+        function updatePlayground() {
+            const accion = document.getElementById('playAccion').value;
+            let juego = document.getElementById('playJuego').value;
+            let puntos = parseInt(document.getElementById('playPuntos').value);
+            const seRespeta = document.getElementById('playSeRespeta').checked;
+            const displayIndex = parseInt(document.getElementById('playIndiceMetodo').value);
+
+            const groupJuego = document.getElementById('groupJuego');
+            const groupPuntos = document.getElementById('groupPuntos');
+            const groupDice = document.getElementById('groupDice');
+
+            // Logic matching state and cacho engine
+            if (accion === 'lanzar') {
+                groupJuego.style.opacity = '0.5';
+                groupPuntos.style.opacity = '0.5';
+                groupDice.style.opacity = '1';
+                juego = "";
+                puntos = -1;
+            } else if (accion === 'dormida' || accion === 'nada') {
+                groupJuego.style.opacity = '0.5';
+                groupPuntos.style.opacity = '0.5';
+                groupDice.style.opacity = '0.5';
+                juego = "";
+                puntos = -1;
+            } else if (accion === 'tachar') {
+                groupJuego.style.opacity = '1';
+                groupPuntos.style.opacity = '0.5';
+                groupDice.style.opacity = '0.5';
+                puntos = 0;
+            } else {
+                groupJuego.style.opacity = '1';
+                groupPuntos.style.opacity = '1';
+                groupDice.style.opacity = '0.5';
+            }
+
+            // 1. Generate C++ Code Block
+            let diceStr = selectedDice.join(', ');
+            let formattedAccion = (accion === 'tachar') ? 'anotar' : accion;
+            
+            let cppCode = `// 1. Declarar la Anotacion\n`;
+            cppCode += `Anotacion anot = {"${juego}", ${puntos}};\n\n`;
+            cppCode += `// 2. Instanciar la Actuacion\n`;
+            cppCode += `Actuacion act(\n`;
+            cppCode += `    "${formattedAccion}",\n`;
+            cppCode += `    anot,\n`;
+            cppCode += `    {${accion === 'lanzar' ? diceStr : ''}},\n`;
+            cppCode += `    ${seRespeta ? 'true' : 'false'}\n`;
+            cppCode += `);`;
+            
+            document.getElementById('outCppCode').textContent = cppCode;
+
+            // 2. Generate display() output simulation
+            let displayOutput = `accion: ${formattedAccion}\n`;
+            displayOutput += `anotacion: (${juego}, ${puntos})\n`;
+            
+            let activeDice = (accion === 'lanzar') ? selectedDice : [];
+            let diceListOutput = activeDice.join(', ');
+            
+            displayOutput += `indiceDados: [${diceListOutput}]\n`;
+            displayOutput += `seRespeta: ${seRespeta ? 'True' : 'False'}`;
+            
+            document.getElementById('outDisplay').textContent = displayOutput;
+
+            // 3. Generate displayCompacto() output simulation
+            let compactOutput = '';
+            if (displayIndex > -1) {
+                compactOutput += `[${displayIndex}]`;
+            }
+            
+            let diceListCompact = activeDice.join(',');
+            
+            compactOutput += `(${formattedAccion},('${juego}', ${puntos}), [${diceListCompact}], ${seRespeta ? 'True' : 'False'})`;
+            
+            document.getElementById('outDisplayCompacto').textContent = compactOutput;
+        }
+
+        // Initialize playground on load
+        window.onload = function() {
+            updatePlayground();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cacho Alalay - Edición Premium</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="app-container">
+        <header>
+            <h1>CACHO <span class="highlight">ALALAY</span></h1>
+            <div class="header-actions">
+                <div id="game-status" class="status-badge">Esperando inicio...</div>
+                <button id="header-restart-btn" class="btn-icon hidden" title="Reiniciar Partida">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main id="game-view" class="hidden">
+            <section class="game-board">
+                <div class="dice-container" id="dice-area">
+                    <!-- Los dados se generarán aquí -->
+                </div>
+
+                <div class="info-panel">
+                    <div class="turn-info">
+                        <div class="info-item">
+                            <span class="label">Intento</span>
+                            <span id="attempt-val" class="value">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Lanzamiento</span>
+                            <span id="roll-val" class="value">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-area">
+                    <h3>Acciones Disponibles</h3>
+                    <div id="actions-list" class="button-grid">
+                        <!-- Las acciones se cargarán aquí -->
+                    </div>
+                </div>
+            </section>
+
+            <aside class="score-board">
+                <div id="scoreboards-container" class="scoreboards-grid">
+                    <!-- Multiple scoreboard cards will be injected here -->
+                </div>
+            </aside>
+        </main>
+
+        <section id="start-screen" class="glass-card centered">
+            <h2>Bienvenido al Cacho Tradicional</h2>
+            <p>Implementación fiel a las reglas de competencia Alalay.</p>
+
+            <div class="player-select">
+                <span class="label">Número de Jugadores</span>
+                <div class="player-options">
+                    <button class="player-opt btn-secondary active" data-count="1">1</button>
+                    <button class="player-opt btn-secondary" data-count="2">2</button>
+                    <button class="player-opt btn-secondary" data-count="3">3</button>
+                    <button class="player-opt btn-secondary" data-count="4">4</button>
+                </div>
+            </div>
+
+            <button id="start-btn" class="btn-primary large">INICIAR PARTIDA</button>
+        </section>
+
+        <section id="game-over-screen" class="glass-card centered hidden">
+            <h2 id="end-status">¡Partida Terminada!</h2>
+            <div id="final-score-box">
+                <span class="label">Puntaje Final</span>
+                <span id="final-score-val">0</span>
+            </div>
+            <p id="end-message"></p>
+            <button id="restart-btn" class="btn-primary large">REINICIAR PARTIDA</button>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
