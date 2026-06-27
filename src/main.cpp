@@ -12,7 +12,7 @@ int main() {
   t.addPlayer(
       []() { return std::make_shared<JugadorAleatorio>("Bot_Random_2"); });
   t.addPlayer(
-      []() { return std::make_shared<JugadorEstuduante>("Player"); });
+      []() { return std::make_shared<JugadorEstudiante>("Player"); });
 
   std::cout << "Starting simulation with 3 Random Players (100 matches)..."
             << std::endl;
